@@ -25,6 +25,16 @@ class ShopAdmin(admin.ModelAdmin):
 class GoodAdmin(admin.ModelAdmin):
     list_display = ['name', 'shop', 'category', 'price', 'amount']
     list_filter = ['shop', 'category', 'activity_flag']
+    actions = ['mark_as_active', 'mark_as_inactive']
+
+    def mark_as_active(self, queryset):
+        queryset.update(activity_flag='a')
+
+    def mark_as_inactive(self, queryset):
+        queryset.update(activity_flag='i')
+
+    mark_as_active.short_description = 'Пометить как активные'
+    mark_as_inactive.short_description = 'Переместить в стоп-лист'
 
 
 class CartAdmin(admin.ModelAdmin):
