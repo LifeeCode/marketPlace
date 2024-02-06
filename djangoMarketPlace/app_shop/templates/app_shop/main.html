@@ -3,6 +3,11 @@
 {% block main %}
     <h4>Average price in our marketplaces in {{avg_price|truncatewords:2}}</h4>
     <div class="d-flex justify-content-start mt-5">
+        {% if messages %}
+            {% for message in messages %}
+        <span style="color: red;">{{message}}</span>
+            {% endfor %}
+        {% endif %}
         {% for i_good in goods %}
             <div class="card me-3" style="width: 18rem;">
               <img src="{{i_good.image.url}}" class="card-img-top" alt="good image">
@@ -12,11 +17,13 @@
                   <h6>{{i_good.shop.name}}</h6>
                 <p class="card-text">{{i_good.description|truncatewords:3}}</p>
                 <p>{{i_good.price}} RUB</p>
-                  <from method="post" action>
-                      {{csrf_token}}
+
+                  <form method="post" action="{% url 'add_good' i_good.pk %}">
+                      {%csrf_token%}
                       {{add_form.good_num}}
-                      <button type="submit" class="btn btn-primary">>Add to card</a></button>
-                  </from>
+                      <button type="submit" class="btn btn-primary">Add to card</button>
+                  </form>
+
               </div>
             </div>
         {% empty %}

@@ -12,5 +12,7 @@ class Userform(UserCreationForm):
 
 
 class CartAddForm(forms.ModelForm):
-    model =  GoodCart
-    fields = ('good_num')
+
+    class Meta:
+        model = GoodCart
+        fields = ('good_num',)
